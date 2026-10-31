@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="gu"><head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>યુનિવર્સલ મેકર - પેઈન્ટર મુકેશ વિશ સ્ટુડિયો</title>
+<style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,'Noto Sans Gujarati',sans-serif}
+body{background:#121212;color:#fff;min-height:100vh}
+.header{background:linear-gradient(135deg,#e65100,#ff9800);padding:18px;text-align:center}
+.header h1{font-size:20px}.header p{font-size:12px;opacity:.9}
+#enterFace{padding:20px;max-width:520px;margin:auto}
+.upload-box{border:3px dashed #ff9800;border-radius:15px;padding:35px 20px;text-align:center;background:#1e1e1e;margin:15px 0;cursor:pointer}
+.upload-box .ic{font-size:50px}
+.upload-box h3{color:#ff9800;margin:10px 0;font-size:17px}
+.upload-box p{color:#aaa;font-size:13px}
+.or{text-align:center;color:#666;margin:10px}
+#editor{display:none;max-width:560px;margin:auto;padding:12px}
+#stage{width:100%;aspect-ratio:3/4;background:#222;border-radius:12px;position:relative;overflow:hidden;border:2px solid #ff9800}
+#stage img.bg,#stage video.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.drag{position:absolute;cursor:move;touch-action:none;user-select:none;padding:4px 8px}
+.drag.txt{font-weight:bold;text-shadow:0 2px 6px rgba(0,0,0,.7);white-space:nowrap}
+.drag.photo{width:110px;height:130px;border:3px solid #fff;border-radius:8px;overflow:hidden;background:#444}
+.drag.photo img{width:100%;height:100%;object-fit:cover}
+.controls{background:#1e1e1e;border-radius:12px;padding:14px;margin:12px 0}
+.controls label{font-size:13px;color:#ffcc80;font-weight:bold}
+.controls input,.controls select{width:100%;padding:10px;margin:6px 0 12px;border-radius:8px;border:1px solid #444;background:#2a2a2a;color:#fff;font-size:15px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.btn{padding:12px;border:none;border-radius:10px;font-weight:bold;font-size:15px;cursor:pointer}
+.btn-add{background:#ff9800;color:#fff;margin:4px 2px;font-size:13px;padding:10px}
+.btn-dl{background:#2e7d32;color:#fff;width:100%;margin-top:8px}
+.btn-back{background:#444;color:#fff;width:100%;margin-top:8px}
+.toolbar{display:flex;flex-wrap:wrap;margin:8px 0}
+.hint{font-size:12px;color:#888;text-align:center;padding:10px}
+</style><script src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'></script></head><body>
+<div class="header"><h1>🎨 યુનિવર્સલ મેકર</h1><p>પેઈન્ટર મુકેશ વિશ સ્ટુડિયો • એક જ એન્ટર ફેસ</p></div>
+
+<div id="enterFace">
+<div class="upload-box" onclick="document.getElementById('fTemplate').click()">
+<div class="ic">🖼️</div><h3>ટેમ્પલેટ અપલોડ કરો</h3><p>JPG / PNG ફોટો → મેકરમાં કન્વર્ટ થશે</p></div>
+<input type="file" id="fTemplate" accept="image/*,.pdf" hidden>
+<div class="upload-box" onclick="document.getElementById('fVideo').click()">
+<div class="ic">🎬</div><h3>વિડિયો અપલોડ કરો</h3><p>MP4 → ઉપર ટેક્સ્ટ/ફોટો ઉમેરી શકાશે</p></div>
+<input type="file" id="fVideo" accept="video/*,audio/*" hidden>
+<div class="upload-box" onclick="document.getElementById('fGift').click()">
+<div class="ic">🎁</div><h3>ગિફ્ટ / GIF અપલોડ કરો</h3><p>GIF / સ્ટીકર → મેકરમાં કન્વર્ટ થશે</p></div>
+<input type="file" id="fGift" accept="image/*" hidden>
+<input type="file" id="fAll" hidden accept="*/*">
+<div class="upload-box" onclick="document.getElementById('fAll').click()" style="border-color:#2e7d32">
+<div class="ic">📁</div><h3 style="color:#2e7d32">ઓલ ફાઇલ અપલોડ</h3><p>કોઈપણ ફાઇલ: JPG, PNG, GIF, MP4, PDF, MP3, DOC → ઓટો મેકર</p></div>
+<p class="hint">કોઈપણ ફાઇલ અપલોડ કરો → ઓટો ડિટેક્ટ → મેકરમાં કન્વર્ટ.<br>ટેક્સ્ટ, ફોટો, સ્ટીકર, મ્યુઝિક, ફિલ્ટર બધું એક જ એડિટરમાં.</p>
+</div>
+
+<div id="editor">
+<div id="stage"></div>
+<div class="toolbar">
+<button class="btn-add btn" onclick="addText()">+ ટેક્સ્ટ</button>
+<button class="btn-add btn" onclick="addName()">+ નામ</button>
+<button class="btn-add btn" onclick="addPhoto()">+ ફોટો</button>
+<button class="btn-add btn" onclick="addText('🎉')">+ સ્ટીકર</button>
+<button class="btn-add btn" onclick="applyFilter('grayscale(1)')">⚫ ફિલ્ટર</button>
+<button class="btn-add btn" onclick="applyFilter('none')">🌈 મૂળ</button><br><span style="font-size:11px;color:#888">PDF, MP3, DOC બધું ચાલશે</span>
+<button class="btn-add btn" onclick="document.getElementById('fAll').addEventListener('change',e=>{const f=e.target.files[0];if(f)handleAnyFile(f);});
+document.getElementById('fPhotoUp').click()">📷 ફોટો બદલો</button>
+</div>
+<input type="file" id="fPhotoUp" accept="image/*" hidden>
+<div class="controls">
+<label>પસંદ કરેલ ટેક્સ્ટ</label>
+<input type="text" id="editText" placeholder="ટેક્સ્ટ લખો..." oninput="updateSel()">
+<div class="row">
+<div><label>રંગ</label><input type="color" id="editColor" value="#ffffff" oninput="updateSel()"></div>
+<div><label>સાઇઝ</label><input type="range" id="editSize" min="14" max="80" value="28" oninput="updateSel()"></div>
+</div>
+<label>ફોન્ટ સ્ટાઇલ</label>
+<select id="editFont" onchange="updateSel()"><option value="Arial">સામાન્ય</option><option value="serif">શોભનીય</option><option value="cursive">હસ્તલિખિત</option></select>
+<p style="font-size:12px;color:#888">સૂચના: કોઈપણ ટેક્સ્ટ/ફોટોને આંગળીથી ખેંચીને ગમે ત્યાં મૂકો. ડબલ-ટેપથી ડિલીટ થશે.</p>
+</div>
+<button class="btn btn-dl" onclick="download()">⬇ ડાઉનલોડ / શેર કરો</button>
+<button class="btn btn-back" onclick="goBack()">← નવું અપલોડ કરો</button>
+<p class="hint">© પેઈન્ટર મુકેશ જે વાળા • 96246 94270</p>
+</div>
+
+<script>
+let sel=null, photoTarget=null;
+function openEditor(){document.getElementById('enterFace').style.display='none';document.getElementById('editor').style.display='block';}
+function goBack(){document.getElementById('editor').style.display='none';document.getElementById('enterFace').style.display='block';document.getElementById('stage').innerHTML='';sel=null;}
+function setBG(src,type,fname){
+  const st=document.getElementById('stage');st.innerHTML='';
+  let el;
+  if(type==='video'){el=document.createElement('video');el.src=src;el.controls=true;el.loop=true;el.play().catch(()=>{});}
+  else if(type==='pdf'){el=document.createElement('iframe');el.src=src;el.setAttribute('style','background:#fff');}
+  else if(type==='audio'){
+    st.innerHTML='<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#4a148c,#7b1fa2);padding:20px"><div style="font-size:60px">🎵</div><div style="margin:10px;font-weight:bold">'+(fname||'ઓડિયો')+'</div></div>';
+    const a=document.createElement('audio');a.src=src;a.controls=true;a.style.cssText='position:absolute;bottom:20px;left:10%;width:80%;z-index:5';st.appendChild(a);
+    openEditor();addText('🎵 શુભેચ્છા');return;
+  }
+  else if(type==='other'){
+    st.innerHTML='<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#2a2a2a;padding:20px"><div style="font-size:60px">📄</div><div style="margin:10px;font-weight:bold">'+(fname||'ફાઇલ')+'</div></div>';
+    openEditor();addText('શુભેચ્છાઓ!');return;
+  }
+  else{el=document.createElement('img');el.src=src;}
+  el.className='bg';st.appendChild(el);
+  openEditor();
+  addText('શુભેચ્છાઓ!');
+}
+function handleAnyFile(file){
+  const r=new FileReader();
+  r.onload=ev=>{
+    const t=file.type||'';
+    const name=file.name||'ફાઇલ';
+    if(t.startsWith('video')) setBG(ev.target.result,'video',name);
+    else if(t==='application/pdf' || name.toLowerCase().endsWith('.pdf')) setBG(ev.target.result,'pdf',name);
+    else if(t.startsWith('audio') || name.match(/\.(mp3|wav|ogg|m4a)$/i)) setBG(ev.target.result,'audio',name);
+    else if(t.startsWith('image')) setBG(ev.target.result,'image',name);
+    else setBG(ev.target.result,'other',name);
+  };
+  r.readAsDataURL(file);
+}
+function makeDrag(el){
+  el.classList.add('drag');
+  let sx,sy,ox,oy,dragging=false;
+  el.addEventListener('pointerdown',e=>{dragging=true;sx=e.clientX;sy=e.clientY;const r=el.getBoundingClientRect();const p=el.offsetParent.getBoundingClientRect();ox=r.left-p.left;oy=r.top-p.top;el.setPointerCapture(e.pointerId);select(el);});
+  el.addEventListener('pointermove',e=>{if(!dragging)return;el.style.left=(ox+e.clientX-sx)+'px';el.style.top=(oy+e.clientY-sy)+'px';});
+  el.addEventListener('pointerup',()=>dragging=false);
+  el.addEventListener('dblclick',()=>{if(confirm('ડિલીટ કરવું?')){el.remove();sel=null;}});
+  el.style.left='30%';el.style.top='40%';
+  document.getElementById('stage').appendChild(el);
+  select(el);
+}
+function select(el){sel=el;if(el.classList.contains('txt')){document.getElementById('editText').value=el.textContent;document.getElementById('editColor').value=rgbToHex(getComputedStyle(el).color);document.getElementById('editSize').value=parseInt(getComputedStyle(el).fontSize);}}
+function rgbToHex(c){const m=c.match(/\d+/g);if(!m)return '#ffffff';return '#'+m.slice(0,3).map(x=>(+x).toString(16).padStart(2,'0')).join('');}
+function addText(t){const d=document.createElement('div');d.className='txt';d.textContent=t||'નવું ટેક્સ્ટ';d.style.color='#fff';d.style.fontSize='28px';makeDrag(d);}
+function addName(){addText('તમારું નામ');}
+function addPhoto(){const d=document.createElement('div');d.className='photo';d.innerHTML='<span style="font-size:11px;color:#aaa">ફોટો</span>';d.onclick=()=>{photoTarget=d;document.getElementById('fAll').addEventListener('change',e=>{const f=e.target.files[0];if(f)handleAnyFile(f);});
+document.getElementById('fPhotoUp').click();};makeDrag(d);photoTarget=d;}
+function updateSel(){if(!sel||!sel.classList.contains('txt'))return;sel.textContent=document.getElementById('editText').value;sel.style.color=document.getElementById('editColor').value;sel.style.fontSize=document.getElementById('editSize').value+'px';sel.style.fontFamily=document.getElementById('editFont').value;}
+function download(){
+  const stage=document.getElementById('stage');
+  alert('PNG ડાઉનલોડ તૈયાર થઈ રહ્યું છે...');
+  if(window.html2canvas){html2canvas(stage).then(c=>{const a=document.createElement('a');a.download='mukesh-maker.png';a.href=c.toDataURL();a.click();});}
+  else{alert('GitHub પર html2canvas CDN ઉમેરો એટલે એક ક્લિકે ડાઉનલોડ થશે.');}
+}
+function addSticker(e){addText(e);} 
+function applyFilter(f){const bg=document.querySelector('#stage .bg');if(bg)bg.style.filter=f;}
+function readFile(inp,cb){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=e=>cb(e.target.result);r.readAsDataURL(f);}
+document.getElementById('fTemplate').addEventListener('change',e=>readFile(e.target,s=>setBG(s,'image')));
+document.getElementById('fGift').addEventListener('change',e=>readFile(e.target,s=>setBG(s,'image')));
+document.getElementById('fVideo').addEventListener('change',e=>readFile(e.target,s=>setBG(s,'video')));
+document.getElementById('fAll').addEventListener('change',e=>{const f=e.target.files[0];if(f)handleAnyFile(f);});
+document.getElementById('fPhotoUp').addEventListener('change',e=>{const f=e.target.files[0];if(!f||!photoTarget)return;const r=new FileReader();r.onload=ev=>{photoTarget.innerHTML='<img src="'+ev.target.result+'">';};r.readAsDataURL(f);});
+</script><script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body></html>
