@@ -21,7 +21,7 @@
   font-family: "Optimistic Mono", ui-monospace, monospace;
 }
 </style><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>યુનિવર્સલ મેકર - પેઈન્ટર મુકેશ વિશ સ્ટુડિયો</title>
+<title>ઓલ-ઇન-વન મેકર FINAL - પેઈન્ટર મુકેશ વિશ સ્ટુડિયો</title>
 <style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,'Noto Sans Gujarati',sans-serif}
 body{background:#121212;color:#fff;min-height:100vh}
 .header{background:linear-gradient(135deg,#e65100,#ff9800);padding:18px;text-align:center}
@@ -109,16 +109,26 @@ function setBG(src,type,fname){
   else if(type==='audio'){
     st.innerHTML='<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#4a148c,#7b1fa2);padding:20px"><div style="font-size:60px">🎵</div><div style="margin:10px;font-weight:bold">'+(fname||'ઓડિયો')+'</div></div>';
     const a=document.createElement('audio');a.src=src;a.controls=true;a.style.cssText='position:absolute;bottom:20px;left:10%;width:80%;z-index:5';st.appendChild(a);
-    openEditor();addText('🎵 શુભેચ્છા');return;
+    showSmartTools(currentType);openEditor();autoCreate();return;
   }
   else if(type==='other'){
     st.innerHTML='<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#2a2a2a;padding:20px"><div style="font-size:60px">📄</div><div style="margin:10px;font-weight:bold">'+(fname||'ફાઇલ')+'</div></div>';
-    openEditor();addText('શુભેચ્છાઓ!');return;
+    showSmartTools(currentType);openEditor();autoCreate();return;
   }
   else{el=document.createElement('img');el.src=src;}
   el.className='bg';st.appendChild(el);
   openEditor();
+  showSmartTools(type==='video'?'video':(type==='pdf'?'pdf':(type==='audio'?'audio':'image')));
+  autoCreate();
+}
+function autoCreate(){
+  // એની મેળે ક્રિએટ: ટાઇટલ + નામ + ફોટો બોક્સ
   addText('શુભેચ્છાઓ!');
+  const t2=document.createElement('div');t2.className='txt';t2.textContent='તમારું નામ લખો';t2.style.color='#ffd54f';t2.style.fontSize='24px';makeDrag(t2);t2.style.top='62%';t2.style.left='25%';
+  const ph=document.createElement('div');ph.className='photo';ph.innerHTML='<span style="font-size:11px;color:#aaa">ફોટો<br>અહીં ટેપ કરો</span>';
+  ph.onclick=()=>{photoTarget=ph;document.getElementById('fPhotoUp').click();};
+  makeDrag(ph);ph.style.top='12%';ph.style.left='35%';photoTarget=ph;
+  const m=document.createElement('div');m.className='txt';m.textContent='શુભ સંદેશ લખો';m.style.color='#fff';m.style.fontSize='18px';makeDrag(m);m.style.top='75%';m.style.left='20%';
 }
 function handleAnyFile(file){
   const r=new FileReader();
@@ -165,4 +175,42 @@ document.getElementById('fGift').addEventListener('change',e=>readFile(e.target,
 document.getElementById('fVideo').addEventListener('change',e=>readFile(e.target,s=>setBG(s,'video')));
 document.getElementById('fAll').addEventListener('change',e=>{const f=e.target.files[0];if(f)handleAnyFile(f);});
 document.getElementById('fPhotoUp').addEventListener('change',e=>{const f=e.target.files[0];if(!f||!photoTarget)return;const r=new FileReader();r.onload=ev=>{photoTarget.innerHTML='<img src="'+ev.target.result+'">';};r.readAsDataURL(f);});
-</script><script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body></html>
+</script>
+<div id="smartTools" style="margin:8px 0"></div>
+<script>
+let currentType='image';
+function showSmartTools(type){
+  currentType=type;
+  const box=document.getElementById('smartTools');
+  let h='';
+  if(type==='video'){
+    h=`<div class="controls"><label>🎬 વિડિયો કમાન્ડ</label>
+    <div class="row"><button class="btn-add btn" onclick="togglePlay()">⏯ પ્લે/પોઝ</button>
+    <button class="btn-add btn" onclick="toggleMute()">🔇 મ્યૂટ</button></div>
+    <label>વિડિયો ફિલ્ટર</label><select onchange="applyFilter(this.value)">
+    <option value="none">મૂળ</option><option value="grayscale(1)">બ્લેક-વ્હાઇટ</option>
+    <option value="sepia(1)">સેપિયા</option><option value="brightness(1.3)">બ્રાઇટ</option></select>
+    <p style="font-size:12px;color:#888">ટેક્સ્ટ/ફોટો ઉપર ઉમેરી શકાશે</p></div>`;
+  } else if(type==='audio'){
+    h=`<div class="controls"><label>🎵 ઓડિયો કમાન્ડ</label>
+    <div class="row"><button class="btn-add btn" onclick="addText('🎵')">+ મ્યુઝિક સ્ટીકર</button>
+    <button class="btn-add btn" onclick="changeAudioBG()">🖼️ બેકગ્રાઉન્ડ બદલો</button></div></div>`;
+  } else if(type==='pdf'){
+    h=`<div class="controls"><label>📄 PDF કમાન્ડ</label>
+    <p style="font-size:12px;color:#888">PDF ઉપર નામ/સહી/સ્ટેમ્પ ટેક્સ્ટ ઉમેરો. પેજ સ્ક્રોલ કરી જુઓ.</p>
+    <div class="row"><button class="btn-add btn" onclick="addText('સહી')">+ સહી</button>
+    <button class="btn-add btn" onclick="addText('✔ વેરિફાઇડ')">+ સ્ટેમ્પ</button></div></div>`;
+  } else {
+    h=`<div class="controls"><label>🖼️ ફોટો / GIF કમાન્ડ</label>
+    <div class="row"><button class="btn-add btn" onclick="applyFilter('grayscale(1)')">⚫ B/W</button>
+    <button class="btn-add btn" onclick="applyFilter('sepia(0.8)')">🟤 સેપિયા</button>
+    <button class="btn-add btn" onclick="applyFilter('none')">🌈 મૂળ</button></div>
+    <label>બ્રાઇટનેસ</label><input type="range" min="50" max="150" value="100" oninput="applyFilter('brightness('+this.value/100+')')"></div>`;
+  }
+  box.innerHTML=h;
+}
+function togglePlay(){const v=document.querySelector('#stage video');if(v){v.paused?v.play():v.pause();}}
+function toggleMute(){const v=document.querySelector('#stage video');if(v)v.muted=!v.muted;}
+function changeAudioBG(){document.getElementById('fTemplate').click();}
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body></html>
