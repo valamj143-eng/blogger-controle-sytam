@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#071b16">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>MUKESH WEB CONTROL CENTER PRO</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;width:100%;min-height:100%;background:#071b16;color:#eafff4;font-family:Arial,sans-serif}
+body{padding-bottom:78px;overflow-x:hidden;-webkit-user-select:none;user-select:none}
+button{font-family:inherit;cursor:pointer}
+.app{max-width:850px;margin:auto;padding:10px}
+.header{background:linear-gradient(135deg,#064e3b,#047857,#0f766e);padding:16px;border-radius:17px;box-shadow:0 6px 18px #0005}
+.header-top{display:flex;align-items:center;gap:11px}
+.logo{width:43px;height:43px;border-radius:13px;background:#d1fae5;color:#064e3b;display:grid;place-items:center;font-size:23px;flex-shrink:0}
+.header h1{font-size:16px;margin:0 0 4px}
+.header .sub{font-size:10px;color:#d1fae5}
+.status{margin-top:11px;font-size:11px;color:#fde68a;line-height:1.5}
+.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.btn{border:0;border-radius:9px;padding:9px 11px;background:#10b981;color:#052e24;font-weight:bold;font-size:11px}
+.btn.yellow{background:#fbbf24;color:#422006}
+.btn.dark{background:#164e3b;color:#d1fae5;border:1px solid #34d399}
+.section{display:none;animation:show .2s ease}
+.section.active{display:block}
+@keyframes show{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:none}}
+.section-title{font-size:15px;font-weight:bold;color:#6ee7b7;margin:16px 2px 8px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.card{min-width:0;background:#102b24;border:1px solid #245447;border-radius:13px;padding:12px}
+.card h3{margin:0 0 7px;font-size:10px;color:#a7f3d0;line-height:1.4}
+.number{font-size:23px;font-weight:bold;color:#fff;overflow-wrap:anywhere}
+.small{font-size:10px;color:#a7c9bb;margin-top:5px;line-height:1.4}
+.panel{background:#102b24;border:1px solid #245447;border-radius:13px;padding:10px;margin-bottom:9px;overflow:auto;max-height:330px}
+.panel.chart-panel{max-height:none;overflow:hidden}
+.table{width:100%;min-width:320px;border-collapse:collapse;font-size:11px}
+.table th,.table td{text-align:left;padding:8px 6px;border-bottom:1px solid #285044;overflow-wrap:anywhere}
+.table th{color:#6ee7b7;background:#16392e;position:sticky;top:0}
+.badge{display:inline-block;background:#064e3b;border:1px solid #10b981;color:#a7f3d0;padding:5px 9px;border-radius:20px;font-size:10px;margin-bottom:7px}
+.chart{width:100%;height:155px;display:block}
+.note{font-size:10px;color:#a7c9bb;margin-top:5px}
+.nav{position:fixed;z-index:100;bottom:0;left:0;right:0;background:#0b241d;border-top:1px solid #245447;display:grid;grid-template-columns:repeat(4,1fr);padding:7px 5px max(7px,env(safe-area-inset-bottom))}
+.nav button{border:0;background:transparent;color:#8eafa1;font-size:10px;padding:5px 2px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.nav button span{font-size:21px}
+.nav button.active{color:#6ee7b7;font-weight:bold}
+.nav button.active span{filter:drop-shadow(0 0 5px #10b981)}
+.footer{text-align:center;color:#789b8c;font-size:10px;padding:18px 5px}
+@media(min-width:650px){.app{padding:16px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.header h1{font-size:20px}.number{font-size:25px}.chart{height:190px}}
+@media print{body,html{background:white!important;color:#111!important;padding:0}.nav,.actions{display:none!important}.app{max-width:none;padding:0}.section{display:block!important}.header{background:#e8f5ef!important;color:#111}.header h1,.header .sub,.status{color:#111}.card,.panel{background:white!important;color:#111!important;border:1px solid #bbb;max-height:none;overflow:visible}.card h3,.section-title,.table th{color:#075c43}.number,.small,.table td{color:#111}.table th{background:#e8f5ef}}
+</style>
+</head>
+<body>
+<div class="app"><header class="header">
+<div class="header-top"><div class="logo">🌐</div><div><h1>MUKESH WEB CONTROL CENTER</h1><div class="sub">PRO • Website Analytics & Speed Monitor</div></div></div>
+<div class="status" id="mwccStatus">ડેટા લોડ થઈ રહ્યો છે...</div>
+<div class="actions"><button class="btn" onclick="mwccLoad()">↻ Refresh</button><button class="btn yellow" onclick="mwccPDF()">📄 PDF</button><button class="btn dark" onclick="mwccExcel()">📊 CSV Report</button></div>
+</header>
+<section class="section active" id="home"><div class="section-title">🏠 Live Website Overview</div>
+<div class="grid">
+<div class="card"><h3>🟢 LIVE VISITORS</h3><div class="number" id="liveUsers">--</div></div>
+<div class="card"><h3>👁 LIVE PAGE VIEWS</h3><div class="number" id="liveViews">--</div></div>
+<div class="card"><h3>📅 TODAY VISITORS</h3><div class="number" id="todayUsers">--</div></div>
+<div class="card"><h3>📄 TODAY VIEWS</h3><div class="number" id="todayViews">--</div></div>
+<div class="card"><h3>📆 7 DAYS VISITORS</h3><div class="number" id="weekUsers">--</div></div>
+<div class="card"><h3>📊 7 DAYS VIEWS</h3><div class="number" id="weekViews">--</div></div>
+<div class="card"><h3>🗓 30 DAYS VISITORS</h3><div class="number" id="monthUsers">--</div></div>
+<div class="card"><h3>📈 30 DAYS VIEWS</h3><div class="number" id="monthViews">--</div></div>
+</div>
+<div class="section-title">📈 7 Days Visitor Graph</div><div class="panel chart-panel"><canvas id="chart7" class="chart"></canvas><div class="note">દરેક દિવસના Visitors અને Page Views.</div></div>
+<div class="section-title">🔴 Live Page Activity</div><div class="panel"><table class="table"><thead><tr><th>Page</th><th>Visitors</th><th>Views</th></tr></thead><tbody id="livePages"></tbody></table></div>
+<div class="section-title">📍 Live Visitor Locations</div><div class="panel"><table class="table"><thead><tr><th>Country</th><th>City</th><th>Visitors</th></tr></thead><tbody id="liveLocations"></tbody></table></div>
+</section>
+<section class="section" id="analytics"><div class="section-title">🏆 ALL TIME ANALYTICS</div>
+<div class="grid">
+<div class="card"><h3>📅 કુલ રેકોર્ડ થયેલા દિવસો</h3><div class="number" id="allDays">--</div></div>
+<div class="card"><h3>👥 દૈનિક Visitors નો સરવાળો</h3><div class="number" id="allVisitors">--</div><div class="small">અનન્ય વ્યક્તિઓની સંખ્યા નથી.</div></div>
+<div class="card"><h3>👁 કુલ Page Views</h3><div class="number" id="allViews">--</div></div>
+<div class="card"><h3>📊 કુલ Sessions</h3><div class="number" id="allSessions">--</div></div>
+<div class="card"><h3>⭐ સૌથી વધુ Visitors વાળો દિવસ</h3><div class="number" id="peakVisitors">--</div><div class="small" id="peakDate">તારીખ: --</div></div>
+<div class="card"><h3>📄 સૌથી વધુ જોવાયેલું પેજ</h3><div class="number" id="allTopPage">--</div><div class="small" id="allTopPageViews">Views: --</div></div>
+<div class="card"><h3>🌍 સૌથી વધુ Visitors વાળું શહેર</h3><div class="number" id="allTopCity">--</div><div class="small" id="allTopCityVisitors">Visitors: --</div></div>
+</div>
+<div class="section-title">📄 ALL TIME TOP 10 PAGES</div><div class="panel"><table class="table"><thead><tr><th>ક્રમ</th><th>Page</th><th>Views</th></tr></thead><tbody id="allTimeTopPages"></tbody></table></div>
+<div class="section-title">🌍 ALL TIME TOP 10 CITIES</div><div class="panel"><table class="table"><thead><tr><th>ક્રમ</th><th>City</th><th>Visitors</th></tr></thead><tbody id="allTimeTopCities"></tbody></table></div>
+<div class="section-title">🏆 Top Pages – Last 30 Days</div><div class="panel"><table class="table"><thead><tr><th>Page</th><th>Views</th></tr></thead><tbody id="topPages"></tbody></table></div>
+<div class="section-title">📱 Visitor Devices</div><div class="panel"><table class="table"><thead><tr><th>Device</th><th>Visitors</th></tr></thead><tbody id="devices"></tbody></table></div>
+</section>
+<section class="section" id="history"><div class="section-title">📚 PERMANENT HISTORY</div><div class="badge">Google Sheets Permanent Archive</div>
+<div class="section-title">📊 Permanent Visitor Trend</div><div class="panel chart-panel"><canvas id="chart30" class="chart"></canvas></div>
+<div class="section-title">📅 Daily History</div><div class="panel"><table class="table"><thead><tr><th>Date</th><th>Visitors</th><th>Views</th><th>Sessions</th></tr></thead><tbody id="historyDaily"></tbody></table></div>
+<div class="section-title">🌍 City History</div><div class="panel"><table class="table"><thead><tr><th>Date</th><th>Country</th><th>City</th><th>Visitors</th><th>Sessions</th></tr></thead><tbody id="historyCities"></tbody></table></div>
+<div class="section-title">📄 Page History</div><div class="panel"><table class="table"><thead><tr><th>Date</th><th>Page</th><th>Views</th><th>Visitors</th></tr></thead><tbody id="historyPages"></tbody></table></div>
+</section>
+<section class="section" id="speed"><div class="section-title">⚡ WEBSITE SPEED MONITOR</div>
+<div class="grid">
+<div class="card"><h3>Speed Records (7 Days)</h3><div class="number" id="speedCount">--</div></div>
+<div class="card"><h3>Average Load Time</h3><div class="number" id="avgLoad">--</div><div class="small">Milliseconds</div></div>
+<div class="card"><h3>Average DOM Time</h3><div class="number" id="avgDom">--</div><div class="small">Milliseconds</div></div>
+<div class="card"><h3>Average TTFB</h3><div class="number" id="avgTtfb">--</div><div class="small">Milliseconds</div></div>
+</div>
+<div class="section-title">📱 Device Speed Report</div><div class="panel"><table class="table"><thead><tr><th>Device</th><th>Records</th><th>Load</th><th>DOM</th><th>TTFB</th></tr></thead><tbody id="deviceSpeed"></tbody></table></div>
+<div class="section-title">🐢 Slow Pages Report</div><div class="panel"><table class="table"><thead><tr><th>Page</th><th>Visits</th><th>Average Load</th></tr></thead><tbody id="slowPages"></tbody></table></div>
+</section>
+<div class="footer">MUKESH WEB CONTROL CENTER PRO<br>Painter Mukesh J Vala</div>
+</div>
+<nav class="nav">
+<button class="active" data-page="home" onclick="showPage('home',this)"><span>🏠</span>HOME</button>
+<button data-page="analytics" onclick="showPage('analytics',this)"><span>📊</span>ANALYTICS</button>
+<button data-page="history" onclick="showPage('history',this)"><span>📚</span>HISTORY</button>
+<button data-page="speed" onclick="showPage('speed',this)"><span>⚡</span>SPEED</button>
+</nav>
+<script>
+(function(){
+'use strict';
+const API='https://script.google.com/macros/s/AKfycbx777ukqPxl4nOHjv8FL2Mu0Tq1wXcVaOvCOvvVTE24g0iwZevozdrB-dn_RwBA3VNaeg/exec';
+let busy=false;let latestData=null;
+function byId(id){return document.getElementById(id)}
+function n(v){const x=Number(v);return Number.isFinite(x)?x:0}
+function safe(v){return String(v==null?'-':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+window.showPage=function(id,button){document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('active',s.id===id)});document.querySelectorAll('.nav button').forEach(function(b){b.classList.toggle('active',b===button)});window.scrollTo({top:0,behavior:'smooth'});if(latestData){setTimeout(function(){if(id==='home')drawChart('chart7',latestData.graph||[]);if(id==='history')drawChart('chart30',(latestData.permanentHistory||{}).daily||[])},100)}};
+function tableRows(id,data,cols,fn){const el=byId(id);if(!el)return;if(!Array.isArray(data)||!data.length){el.innerHTML='<tr><td colspan="'+cols+'">હાલ ડેટા ઉપલબ્ધ નથી</td></tr>';return}el.innerHTML=data.map(function(x,i){return fn(x,i)}).join('')}
+function drawChart(id,data){const c=byId(id);if(!c||!c.clientWidth)return;const ctx=c.getContext('2d');const width=c.clientWidth,height=155,ratio=window.devicePixelRatio||1;c.width=width*ratio;c.height=height*ratio;ctx.setTransform(ratio,0,0,ratio,0,0);ctx.clearRect(0,0,width,height);if(!Array.isArray(data)||!data.length){ctx.fillStyle='#a7c9bb';ctx.font='12px Arial';ctx.fillText('હાલ ગ્રાફ માટે ડેટા ઉપલબ્ધ નથી',10,30);return}const p={left:35,right:10,top:20,bottom:27};const w=width-p.left-p.right,h=height-p.top-p.bottom;const max=Math.max(1,...data.map(x=>Math.max(n(x.views),n(x.visitors),n(x.users))));const count=data.length,step=count>1?w/(count-1):0;ctx.strokeStyle='#315447';ctx.fillStyle='#a7c9bb';ctx.font='9px Arial';for(let i=0;i<=4;i++){const y=p.top+h*i/4;ctx.beginPath();ctx.moveTo(p.left,y);ctx.lineTo(width-p.right,y);ctx.stroke();ctx.fillText(String(Math.round(max*(4-i)/4)),2,y+3)}function draw(key,color){ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=2;data.forEach(function(x,i){const px=count===1?p.left+w/2:p.left+i*step;const py=p.top+h-(n(x[key])/max)*h;if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py)});ctx.stroke();data.forEach(function(x,i){const px=count===1?p.left+w/2:p.left+i*step;const py=p.top+h-(n(x[key])/max)*h;ctx.fillStyle=color;ctx.beginPath();ctx.arc(px,py,2.5,0,Math.PI*2);ctx.fill()})}draw('views','#34d399');draw(data[0].visitors!==undefined?'visitors':'users','#fbbf24');const labels=data.length>10?data.filter((x,i)=>i%Math.ceil(data.length/6)===0||i===data.length-1):data;labels.forEach(function(x){const i=data.indexOf(x),px=count===1?p.left+w/2:p.left+i*step;ctx.fillStyle='#a7c9bb';ctx.fillText(String(x.date||'').slice(-4),px-10,height-7)});ctx.fillStyle='#34d399';ctx.fillRect(p.left,5,8,8);ctx.fillStyle='#a7c9bb';ctx.fillText('Views',p.left+11,12);ctx.fillStyle='#fbbf24';ctx.fillRect(p.left+65,5,8,8);ctx.fillStyle='#a7c9bb';ctx.fillText('Visitors',p.left+76,12)}
+function render(d){latestData=d;byId('liveUsers').textContent=n(d.live&&d.live.users);byId('liveViews').textContent=n(d.live&&d.live.views);byId('todayUsers').textContent=n(d.today&&d.today.users);byId('todayViews').textContent=n(d.today&&d.today.views);byId('weekUsers').textContent=n(d.weekly&&d.weekly.users);byId('weekViews').textContent=n(d.weekly&&d.weekly.views);byId('monthUsers').textContent=n(d.monthly&&d.monthly.users);byId('monthViews').textContent=n(d.monthly&&d.monthly.views);const at=d.allTime||{};byId('allDays').textContent=at.success?n(at.totalDays):'--';byId('allVisitors').textContent=at.success?n(at.totalVisitors):'--';byId('allViews').textContent=at.success?n(at.totalViews):'--';byId('allSessions').textContent=at.success?n(at.totalSessions):'--';byId('peakVisitors').textContent=at.success?n(at.peakVisitors):'--';byId('peakDate').textContent='તારીખ: '+(at.success?safe(at.peakDate):'--');byId('allTopPage').textContent=at.success&&at.topPage?safe(at.topPage.page):'--';byId('allTopPageViews').textContent='Views: '+(at.success&&at.topPage?n(at.topPage.views):'--');byId('allTopCity').textContent=at.success&&at.topCity?safe(at.topCity.city):'--';byId('allTopCityVisitors').textContent='Visitors: '+(at.success&&at.topCity?n(at.topCity.visitors):'--');tableRows('allTimeTopPages',at.topPages,3,(x,i)=>'<tr><td>'+(i+1)+'</td><td>'+safe(x.page)+'</td><td>'+n(x.views)+'</td></tr>');tableRows('allTimeTopCities',at.topCities,3,(x,i)=>'<tr><td>'+(i+1)+'</td><td>'+safe(x.city)+'</td><td>'+n(x.visitors)+'</td></tr>');tableRows('livePages',d.livePages,3,x=>'<tr><td>'+safe(x.page)+'</td><td>'+n(x.activeUsers)+'</td><td>'+n(x.views)+'</td></tr>');tableRows('liveLocations',d.liveLocations,3,x=>'<tr><td>'+safe(x.country)+'</td><td>'+safe(x.city)+'</td><td>'+n(x.users)+'</td></tr>');const ph=d.permanentHistory||{};tableRows('historyDaily',ph.daily,4,x=>'<tr><td>'+safe(x.date)+'</td><td>'+n(x.visitors)+'</td><td>'+n(x.views)+'</td><td>'+n(x.sessions)+'</td></tr>');tableRows('historyCities',ph.cities,5,x=>'<tr><td>'+safe(x.date)+'</td><td>'+safe(x.country)+'</td><td>'+safe(x.city)+'</td><td>'+n(x.visitors)+'</td><td>'+n(x.sessions)+'</td></tr>');tableRows('historyPages',ph.pages,4,x=>'<tr><td>'+safe(x.date)+'</td><td>'+safe(x.page)+'</td><td>'+n(x.views)+'</td><td>'+n(x.visitors)+'</td></tr>');tableRows('topPages',d.topPages,2,x=>'<tr><td>'+safe(x.page)+'</td><td>'+n(x.views)+'</td></tr>');tableRows('devices',d.devices,2,x=>'<tr><td>'+safe(x.name)+'</td><td>'+n(x.users)+'</td></tr>');const s=d.speed||{};byId('speedCount').textContent=n(s.count);byId('avgLoad').textContent=n(s.avgLoad)+' ms';byId('avgDom').textContent=n(s.avgDom)+' ms';byId('avgTtfb').textContent=n(s.avgTtfb)+' ms';tableRows('deviceSpeed',s.deviceStats,5,x=>'<tr><td>'+safe(x.device)+'</td><td>'+n(x.count)+'</td><td>'+n(x.avgLoadMs)+' ms</td><td>'+n(x.avgDomMs)+' ms</td><td>'+n(x.avgTtfbMs)+' ms</td></tr>');tableRows('slowPages',s.slowPages,3,x=>'<tr><td>'+safe(x.page)+'</td><td>'+n(x.visits)+'</td><td>'+n(x.avgLoadMs)+' ms</td></tr>');drawChart('chart7',d.graph||[]);drawChart('chart30',ph.daily||[])}
+function load(){if(busy)return;busy=true;byId('mwccStatus').textContent='ડેટા અપડેટ થઈ રહ્યો છે...';const cb='mwccCallback_'+Date.now();const script=document.createElement('script');let done=false;const timeout=setTimeout(function(){finish();byId('mwccStatus').textContent='જવાબ મળ્યો નથી. Refresh કરો.'},20000);function finish(){if(done)return;done=true;clearTimeout(timeout);busy=false;if(script.parentNode)script.parentNode.removeChild(script);try{delete window[cb]}catch(e){}}window[cb]=function(data){finish();if(!data||!data.success){byId('mwccStatus').textContent='API માંથી યોગ્ય ડેટા મળ્યો નથી.';return}try{render(data);byId('mwccStatus').textContent='છેલ્લું અપડેટ: '+new Date(data.updated).toLocaleString('gu-IN');if(data.permanentHistory&&data.permanentHistory.success)byId('mwccStatus').textContent+=' • History OK';if(data.allTime&&data.allTime.success)byId('mwccStatus').textContent+=' • All Time OK'}catch(e){console.error(e);byId('mwccStatus').textContent='ડેટા દર્શાવવામાં ભૂલ આવી.'}};script.onerror=function(){finish();byId('mwccStatus').textContent='API કનેક્શન નિષ્ફળ થયું.'};script.src=API+'?callback='+cb+'&t='+Date.now();document.body.appendChild(script)}
+window.mwccLoad=load;window.mwccPDF=function(){window.print()};
+function csvCell(v){return '"'+String(v==null?'':v).replace(/"/g,'""')+'"'}
+function csvSection(title,headers,rows){let a=[csvCell(title),headers.map(csvCell).join(',')];rows.forEach(r=>a.push(r.map(csvCell).join(',')));a.push('');return a.join('\r\n')}
+window.mwccExcel=function(){if(!latestData){alert('પહેલાં ડેટા લોડ થવા દો.');return}const d=latestData,ph=d.permanentHistory||{},at=d.allTime||{},s=d.speed||{};let csv='\uFEFF';csv+=csvSection('SUMMARY',['Report','Value'],[['Live Visitors',n(d.live&&d.live.users)],['Live Views',n(d.live&&d.live.views)],['Today Visitors',n(d.today&&d.today.users)],['Today Views',n(d.today&&d.today.views)],['7 Days Visitors',n(d.weekly&&d.weekly.users)],['7 Days Views',n(d.weekly&&d.weekly.views)],['30 Days Visitors',n(d.monthly&&d.monthly.users)],['30 Days Views',n(d.monthly&&d.monthly.views)]]);csv+=csvSection('ALL TIME',['Report','Value'],[['Recorded Days',at.totalDays||0],['Daily Visitors Sum',at.totalVisitors||0],['Total Views',at.totalViews||0],['Total Sessions',at.totalSessions||0],['Peak Date',at.peakDate||'-'],['Peak Visitors',at.peakVisitors||0],['Top Page',at.topPage?at.topPage.page:'-'],['Top Page Views',at.topPage?at.topPage.views:0],['Top City',at.topCity?at.topCity.city:'-'],['Top City Visitors',at.topCity?at.topCity.visitors:0]]);csv+=csvSection('ALL TIME TOP PAGES',['Page','Views'],(at.topPages||[]).map(x=>[x.page,x.views]));csv+=csvSection('ALL TIME TOP CITIES',['City','Visitors'],(at.topCities||[]).map(x=>[x.city,x.visitors]));csv+=csvSection('DAILY HISTORY',['Date','Visitors','Views','Sessions'],(ph.daily||[]).map(x=>[x.date,x.visitors,x.views,x.sessions]));csv+=csvSection('CITY HISTORY',['Date','Country','City','Visitors','Sessions'],(ph.cities||[]).map(x=>[x.date,x.country,x.city,x.visitors,x.sessions]));csv+=csvSection('PAGE HISTORY',['Date','Page','Views','Visitors'],(ph.pages||[]).map(x=>[x.date,x.page,x.views,x.visitors]));csv+=csvSection('TOP PAGES 30 DAYS',['Page','Views'],(d.topPages||[]).map(x=>[x.page,x.views]));csv+=csvSection('DEVICES',['Device','Visitors'],(d.devices||[]).map(x=>[x.name,x.users]));csv+=csvSection('SPEED SUMMARY',['Metric','Value'],[['Records',s.count],['Average Load',s.avgLoad],['Average DOM',s.avgDom],['Average TTFB',s.avgTtfb]]);csv+=csvSection('DEVICE SPEED',['Device','Records','Load','DOM','TTFB'],(s.deviceStats||[]).map(x=>[x.device,x.count,x.avgLoadMs,x.avgDomMs,x.avgTtfbMs]));csv+=csvSection('SLOW PAGES',['Page','Visits','Average Load'],(s.slowPages||[]).map(x=>[x.page,x.visits,x.avgLoadMs]));const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Mukesh_Web_Control_Center_Report.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+load();setInterval(load,30000);
+window.addEventListener('resize',function(){if(!latestData)return;if(byId('home').classList.contains('active'))drawChart('chart7',latestData.graph||[]);if(byId('history').classList.contains('active'))drawChart('chart30',(latestData.permanentHistory||{}).daily||[])});
+document.addEventListener('backbutton',function(e){e.preventDefault()},false);
+})();
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</html>
