@@ -1,80 +1,339 @@
 <!DOCTYPE html>
-<html lang="gu"><head><style>
-@font-face {
-  font-family: "Optimistic";
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>KALAY ART PLP EDITOR</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+
+<style>
+body{
+margin:0;
+background:#111;
+color:white;
+font-family:sans-serif;
 }
-@font-face {
-  font-family: "Optimistic Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+
+.toolbar{
+display:flex;
+overflow:auto;
+padding:10px;
+background:#222;
+gap:10px;
 }
-:where(html) {
-  font-family: "Optimistic", system-ui, sans-serif;
+
+button{
+padding:10px;
+border:none;
+background:#ff9800;
+color:white;
+border-radius:5px;
 }
-:where(code, pre, kbd, samp) {
-  font-family: "Optimistic Mono", ui-monospace, monospace;
+
+canvas{
+border:1px solid #333;
 }
-</style><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ડેશબોર્ડ - પેઈન્ટર મુકેશ વિશ સ્ટુડિયો</title>
-<style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,'Noto Sans Gujarati',sans-serif}
-body{background:#0f0f0f;color:#fff;min-height:100vh}
-.header{background:linear-gradient(135deg,#e65100,#ff9800);padding:22px;text-align:center;border-radius:0 0 20px 20px}
-.header h1{font-size:22px}.header p{font-size:13px;opacity:.9}
-.stats{display:flex;gap:10px;padding:15px}
-.stat{flex:1;background:#1e1e1e;border-radius:12px;padding:14px;text-align:center;border:1px solid #333}
-.stat .n{font-size:24px;font-weight:bold;color:#ff9800}.stat .l{font-size:12px;color:#aaa}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 15px}
-.card{background:#1e1e1e;border:1px solid #333;border-radius:14px;padding:20px 12px;text-align:center;cursor:pointer}
-.card .ic{font-size:38px}.card h3{font-size:15px;margin:8px 0;color:#ffcc80}.card p{font-size:11px;color:#888}
-.card:active{transform:scale(.97)}
-.section-title{padding:18px 15px 8px;font-size:16px;color:#ff9800;font-weight:bold}
-.recent{padding:0 15px;display:flex;gap:10px;overflow-x:auto}
-.recent .th{flex:0 0 100px;height:120px;background:#222;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:30px;border:1px solid #333}
-.footer{text-align:center;color:#666;font-size:12px;padding:20px}
-#makerWrap{display:none}
-.btn-back{background:#444;color:#fff;padding:10px 20px;border:none;border-radius:10px;margin:10px}
-</style></head><body>
-<div id="dashView">
-<div class="header"><h1>🎨 પેઈન્ટર મુકેશ સ્ટુડિયો</h1><p>ડેશબોર્ડ • ઓલ-ઇન-વન મેકર</p></div>
-<div class="stats">
-<div class="stat"><div class="n" id="stTotal">0</div><div class="l">કુલ બનાવેલ</div></div>
-<div class="stat"><div class="n" id="stToday">0</div><div class="l">આજે</div></div>
-<div class="stat"><div class="n">8</div><div class="l">કેટેગરી</div></div>
+
+.editor{
+display:flex;
+flex-direction:column;
+height:100vh;
+}
+
+#canvas-wrap{
+flex:1;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="editor">
+
+<div class="toolbar">
+
+<button onclick="addText()">Text</button>
+
+<button onclick="uploadImage()">Image</button>
+
+<button onclick="saveProject()">Save</button>
+
+<button onclick="openProject()">Open</button>
+
+<button onclick="exportPNG()">PNG</button>
+
+<button onclick="deleteSelected()">Delete</button>
+
+<input type="file" id="imageInput" hidden>
+
+<input type="file" id="projectInput" hidden>
+
 </div>
-<div class="section-title">⚡ ઝડપી શરૂ કરો</div>
-<div class="grid">
-<div class="card" onclick="openMaker('image')"><div class="ic">🖼️</div><h3>ફોટો મેકર</h3><p>ટેમ્પલેટ અપલોડ કરો</p></div>
-<div class="card" onclick="openMaker('video')"><div class="ic">🎬</div><h3>વિડિયો મેકર</h3><p>MP4 અપલોડ કરો</p></div>
-<div class="card" onclick="openMaker('audio')"><div class="ic">🎵</div><h3>ઓડિયો મેકર</h3><p>MP3 અપલોડ કરો</p></div>
-<div class="card" onclick="openMaker('pdf')"><div class="ic">📄</div><h3>PDF મેકર</h3><p>ડોક્યુમેન્ટ એડિટ</p></div>
-<div class="card" onclick="openMaker('shradhanjali')"><div class="ic">🕯️</div><h3>શ્રદ્ધાંજલિ</h3><p>શોક સંદેશ બનાવો</p></div>
-<div class="card" onclick="openMaker('wish')"><div class="ic">🎂</div><h3>વિશ મેકર</h3><p>જન્મદિવસ / તહેવાર</p></div>
+
+<div id="canvas-wrap">
+
+<canvas id="canvas" width="1080" height="1080"></canvas>
+
 </div>
-<div class="section-title">🕘 તાજેતરમાં</div>
-<div class="recent" id="recentRow"><div class="th">➕</div></div>
-<div class="footer">© 2026 પેઈન્ટર મુકેશ જે વાળા • 96246 94270<br>valamj3@gmail.com</div>
+
 </div>
-<div id="makerWrap">
-<button class="btn-back" onclick="goDash()">← ડેશબોર્ડ</button>
-<iframe id="makerFrame" src="" style="width:100%;height:calc(100vh - 60px);border:none"></iframe>
-</div>
+
 <script>
-let total=parseInt(localStorage.getItem('mk_total')||'0');
-document.getElementById('stTotal').textContent=total;
-document.getElementById('stToday').textContent=localStorage.getItem('mk_today')||'0';
-function openMaker(type){
-  // maker file is universal-maker-final.html in same folder
-  document.getElementById('dashView').style.display='none';
-  document.getElementById('makerWrap').style.display='block';
-  document.getElementById('makerFrame').src='universal-maker-final.html?type='+type;
-  total++;localStorage.setItem('mk_total',total);
-  document.getElementById('stTotal').textContent=total;
+
+const canvas = new fabric.Canvas('canvas');
+
+canvas.backgroundColor="#ffffff";
+canvas.renderAll();
+
+function addText(){
+
+let text=new fabric.IText("KALAY ART",{
+
+left:100,
+top:100,
+fill:"#ff6600",
+fontSize:60
+
+});
+
+canvas.add(text);
+
 }
-function goDash(){document.getElementById('makerWrap').style.display='none';document.getElementById('dashView').style.display='block';document.getElementById('makerFrame').src='';}
-</script><script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body></html>
+
+function uploadImage(){
+
+document.getElementById('imageInput').click();
+
+}
+
+document.getElementById('imageInput')
+મુકેશભાઈ, "સંપૂર્ણ MVP" માટેનો કોડ એક જ જવાબમાં આપવો વ્યવહારિક રીતે શક્ય નથી, કારણ કે તમે જે માંગો છો તે લગભગ **હજારો લાઇનનો પૂર્ણ વેબ એપ્લિકેશન પ્રોજેક્ટ** છે.
+
+પરંતુ હું તમને **Starter MVP Code** આપું છું જેનાથી:
+
+✅ Canvas Editor  
+✅ Add Text  
+✅ Image Upload  
+✅ Layer Selection  
+✅ Save Project (.plp)  
+✅ Open Project (.plp)  
+✅ Export PNG  
+✅ Font Upload  
+
+શરૂ થઈ જાય.
+
+### index.html
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KALAY ART PLP Editor</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#111;
+color:white;
+}
+
+.toolbar{
+display:flex;
+gap:5px;
+padding:10px;
+background:#222;
+flex-wrap:wrap;
+}
+
+button,input{
+padding:8px;
+}
+
+#canvasWrap{
+display:flex;
+justify-content:center;
+margin-top:10px;
+}
+
+canvas{
+border:2px solid orange;
+}
+</style>
+</head>
+
+<body>
+
+<div class="toolbar">
+
+<button onclick="addText()">Text</button>
+
+<input type="file" id="imageInput">
+
+<input type="file" id="fontInput">
+
+<button onclick="savePLP()">Save PLP</button>
+
+<input type="file" id="openPLP">
+
+<button onclick="exportPNG()">PNG</button>
+
+</div>
+
+<div id="canvasWrap">
+<canvas id="editor" width="1080" height="1080"></canvas>
+</div>
+
+<script>
+
+const canvas = new fabric.Canvas("editor");
+
+canvas.backgroundColor = "#ffffff";
+
+canvas.renderAll();
+
+function addText(){
+
+let txt = new fabric.Textbox(
+"જય શ્રી રામ",
+{
+left:200,
+top:200,
+fontSize:60,
+fill:"#ff6600"
+}
+);
+
+canvas.add(txt);
+
+}
+
+document.getElementById("imageInput")
+.addEventListener("change",e=>{
+
+let file=e.target.files[0];
+
+let reader=new FileReader();
+
+reader.onload=function(f){
+
+fabric.Image.fromURL(
+f.target.result,
+function(img){
+
+img.scaleToWidth(300);
+
+canvas.add(img);
+
+}
+);
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+
+async function savePLP(){
+
+let json=canvas.toJSON();
+
+let blob=new Blob(
+[
+JSON.stringify(json)
+],
+{
+type:"application/json"
+}
+);
+
+let a=document.createElement("a");
+
+a.href=URL.createObjectURL(blob);
+
+a.download="project.plp";
+
+a.click();
+
+}
+
+document.getElementById("openPLP")
+.addEventListener("change",e=>{
+
+let file=e.target.files[0];
+
+let reader=new FileReader();
+
+reader.onload=function(ev){
+
+canvas.loadFromJSON(
+ev.target.result,
+function(){
+
+canvas.renderAll();
+
+}
+);
+
+};
+
+reader.readAsText(file);
+
+});
+
+function exportPNG(){
+
+let url=canvas.toDataURL({
+format:"png"
+});
+
+let a=document.createElement("a");
+
+a.href=url;
+
+a.download="design.png";
+
+a.click();
+
+}
+
+document.getElementById("fontInput")
+.addEventListener("change",function(e){
+
+let file=e.target.files[0];
+
+if(!file) return;
+
+let fontName=file.name.split(".")[0];
+
+let fontURL=URL.createObjectURL(file);
+
+let style=document.createElement("style");
+
+style.innerHTML=`
+@font-face{
+font-family:'${fontName}';
+src:url('${fontURL}');
+}
+`;
+
+document.head.appendChild(style);
+
+alert("Font Loaded: "+fontName);
+
+});
+
+</script>
+
+</body>
+</html>
